@@ -1,0 +1,149 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+
+main {
+    background: linear-gradient(to right top, #65dfc9, #6cdbeb);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    overflow: auto;
+}
+
+.title {
+    font-family: 'Pacifico', cursive;
+    font-size: 4.8rem;
+    margin-bottom: 3rem;
+}
+#scores {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+    width: 60vh;
+    height: 8vh;
+    min-height: 80px;
+    min-width: 450px;
+    border-radius: 1rem;
+    
+    border: 1px solid black;
+}
+
+    .score-container {
+        border: 1px solid black;
+        width: 45%;
+        height: 100%;
+        border-radius: 1rem;
+        background: linear-gradient(
+        to right bottom,
+        rgba(255, 255, 255, 0.85),
+        rgba(255, 255, 255, 0.45)
+        );
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .player1 {
+        background: #db8641d3;
+    }
+
+    .player2 {
+        background:#ebe96cc0;
+    }
+
+    .turn {
+        transform: scale(1.05);
+    }
+
+    .score-container > div {
+        font-size: 3vh;
+        font-weight: 800;
+    }
+
+    .win {
+        background: rgba(128, 255, 0, 0.596);
+        transform: scale(1.1);
+    }
+
+    .lose {
+        background: rgba(220, 20, 20, 0.644);
+        transform: scale(0.9);
+    }
+
+
+
+#game-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    align-items: center;
+    height: 60vh;
+    width: 60vh;
+    min-width: 450px;
+    min-height: 450px;
+    border: 1px solid black;
+    border-radius: 1rem;
+    padding: 1rem;
+    background: linear-gradient(
+    to right bottom,
+    rgba(255, 255, 255, 0.85),
+    rgba(255, 255, 255, 0.45)
+    );
+}
+
+.square {
+    border: 1px solid black;
+    width: 31%;
+    height: 31%;
+    border-radius: 1rem;
+    background: linear-gradient(
+    to right bottom,
+    rgba(255, 255, 255, 0.7),
+    rgba(255, 255, 255, 0.3)
+    );
+}
+
+    .square:hover{
+        cursor: pointer;
+        transform: scale(1.05);
+    }
+
+    .cross{
+        background: #db8641d3;
+    }
+
+    .naught {
+        background:#ebe96cc0;
+    }
+
+.button {
+    margin-top: 2rem;
+    width: 15vh;
+    height: 5vh;
+    min-width: 150px;
+    border-radius: 1rem;
+    border: none;
+    background: linear-gradient(
+    to right bottom,
+    rgba(255, 255, 255, 0.95),
+    rgba(255, 255, 255, 0.7)
+    );
+    font-size: 1.5vh;
+    font-weight: 600;
+}
+
+    .button:hover {
+        cursor: pointer;
+        transform: scale(1.05);
+        background: linear-gradient(
+            to right bottom,
+            rgba(161, 51, 212, 0.95),
+            rgba(173, 63, 173, 0.7)
+            );
+        color: rgba(245, 245, 245, 0.9);
+    }
