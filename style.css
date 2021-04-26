@@ -29,8 +29,6 @@ main {
     min-height: 80px;
     min-width: 450px;
     border-radius: 1rem;
-    
-    border: 1px solid black;
 }
 
     .score-container {
@@ -122,6 +120,7 @@ main {
     }
 
 .button {
+    display: none;
     margin-top: 2rem;
     width: 15vh;
     height: 5vh;
@@ -135,6 +134,7 @@ main {
     );
     font-size: 1.5vh;
     font-weight: 600;
+    z-index: 2;
 }
 
     .button:hover {
@@ -146,4 +146,23 @@ main {
             rgba(173, 63, 173, 0.7)
             );
         color: rgba(245, 245, 245, 0.9);
+    }
+
+    .blur-box {
+        display: none;
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        filter: blue(4px);
+        background: rgba(255, 255, 255, 0.699);
+        justify-content: center;
+        align-items: center;
+    }
+
+    .winner {
+        background: linear-gradient(to right top, #65dfc9e0, #6cdaebe5);
+        padding: 2rem;
+        border-radius: 1rem;
+        width: 30vh;
+        text-align: center;
     }

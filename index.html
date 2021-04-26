@@ -16,31 +16,38 @@
         <div class="title">Tic-Tac-Toe</div>
 
         <section id="scores">
-            <div id="player1-score" class="score-container player1 turn win">
+            <div id="player1-score" class="score-container turn player1">
                 <div>Player 1</div>
 
 
             </div>
-            <div id="player2-score" class="score-container player2 turn lose">
+            <div id="player2-score" class="score-container">
                 <div>Player 2</div>
             </div>
         </section>
 
         <section id="game-container">
-            <div id="top-left" class="square"></div>
-            <div id="top-middle" class="square"></div>
-            <div id="top-right" class="square"></div>
+            <div id="1" class="square"></div>
+            <div id="2" class="square"></div>
+            <div id="3" class="square"></div>
 
-            <div id="middle-left" class="square"></div>
-            <div id="middle-middle" class="square"></div>
-            <div id="middle-right" class="square"></div>
+            <div id="4" class="square"></div>
+            <div id="5" class="square"></div>
+            <div id="6" class="square"></div>
 
-            <div id="bottom-left" class="square"></div>
-            <div id="bottom-middle" class="square naught"></div>
-            <div id="bottom-right" class="square cross"></div>
+            <div id="7" class="square"></div>
+            <div id="8" class="square"></div>
+            <div id="9" class="square"></div>
         </section>
 
-        <button id="game-refresh" class="button">Play again?</button>
+        
+        <div id="end-game-container" class="blur-box">
+            <h1 class="winner"></h1>
+        </div>
+
+        <button id="game-refresh" class="button" onClick="window.location.reload();">Play again?</button>
+     
+        
 
 
     </main>
