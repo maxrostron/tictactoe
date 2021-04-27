@@ -17,9 +17,10 @@ let squareControls = (function () {
             gameControls.winCheck()
         })
     });
+
  
     return {
-        checkTurn(input, computer) {
+        checkTurn(input, div) {
         let element = document.getElementById(`${input}`)
         if(playerControls.player1.turn === true){
             player1Container.classList.remove("turn")
@@ -34,24 +35,23 @@ let squareControls = (function () {
                 event.stopImmediatePropagation();
             }, true);
             playerControls.changeTurn()
-            if(computerAI.computerSelected === true){
+            if(playerControls.player2.controller == "computer"){
                 computerAI.computerMove();
             }
         } 
-        else if(computerAI.computerSelected === true) {
-            console.log(player1Container)
-            // player1Container.classList.add("turn")
-            // player1Container.classList.add("player1")
+        else if(playerControls.player2.controller == "computer") {
+            player1Container.classList.add("turn")
+            player1Container.classList.add("player1")
 
             player2Container.classList.remove("turn")
             player2Container.classList.remove("player2")
 
-            computer.classList.add("naught")
-            computer.classList.remove("square:hover")
-            computer.addEventListener('click', function(event) {
+            div.classList.add("naught")
+            div.classList.remove("square:hover")
+            div.addEventListener('click', function(event) {
                 event.stopImmediatePropagation();
             }, true);
-            playerControls.changeTurn()   
+            playerControls.changeTurn()  
         } 
         else if(playerControls.player2.turn === true) { 
             player1Container.classList.add("turn")
@@ -70,7 +70,7 @@ let squareControls = (function () {
        },
        endGame() { 
         if(playerControls.player1.winner === true) {
-         player1Container.classList.add = "win"
+         player1Container.classList.add("win")
          player2Container.classList.add("lose")
          endgameContainer.style.display = "flex"
          resetButton.style.display = "block"
@@ -78,11 +78,20 @@ let squareControls = (function () {
         }
         else if(playerControls.player2.winner === true) {
          player2Container.classList.add("win")
-         player1Container.classList.add ="lose"
+         player1Container.classList.add("lose")
          endgameContainer.style.display = "flex"
          resetButton.style.display = "block"
          document.querySelector(".winner").innerHTML = "Player 2 Wins!"
         } 
+        },
+        switchPlayer2(){
+            player2Container.innerHTML = ""
+            if(playerControls.player2.controller == "human") {
+                player2Container.innerHTML = "Player 2"
+            } 
+            else if (playerControls.player2.controller == "computer") {
+                player2Container.innerHTML = "Computer"
+            }
         }
     }
 })();
@@ -112,9 +121,13 @@ let playerControls = (function(){
             if(player1.turn === true){
                 player1.turn = false;
                 player2.turn = true;
+                console.log(player1.selection)
+                console.log(player2.selection)
             } else {
                 player1.turn = true;
                 player2.turn = false;
+                console.log(player1.selection)
+                console.log(player2.selection)
             }
         },
         addSelection(elementID) {
@@ -129,62 +142,68 @@ let playerControls = (function(){
                     return a - b;
                 })
             }
-            console.log(player1.selection)
-            console.log(player2.selection)
         },
         playComputer(selection){
-            player2.controller = "computer"
             player2.selection.push(`${selection}`);
+        },
+        clearSelection(){
+            player1.selection = [];
+            player2.selection = [];
+        },
+        changeToComputer(){
+            player2.controller = "computer"
+        },
+        changeToHuman(){
+            player2.controller = "human"
         }
+        
     }
 })();
 
 let computerAI = (function(){
 
-    let computerSelected = true;
     let selection = ''
     let selectedDiv = document.getElementById(`${selection}`)
 
-    function computerSelection(div) {
-        document.getElementById("player1-score").classList.add = "turn"
-        document.getElementById("player1-score").add = "player1"
-
-        div.classList.remove("turn")
-        div.classList.remove("player2")
-
-        div.classList.add("naught")
-        div.classList.remove("square:hover")
-        div.addEventListener('click', function(event) {
-            event.stopImmediatePropagation();
-        }, true);
+    function testSelection() {
+        if(playerControls.player2.selection.includes(selection) || playerControls.player1.selection.includes(selection)) {
+            x = Math.floor(Math.random() * 9) + 1
+            selection = x.toString();
+            testSelection()
+        }
     }
 
     return {
         computerMove() {
-            selection = Math.floor(Math.random() * 10);
-            while(playerControls.player2.selection.includes(selection) || playerControls.player1.selection.includes(selection)) {
-                selection = Math.floor(Math.random() * 10)
+            if(playerControls.player1.selection.length < 5){
+                x = Math.floor(Math.random() * 9) + 1;
+                selection = x.toString();
+                testSelection()
+                let div = document.getElementById(`${selection}`)
+                playerControls.playComputer(selection)
+                squareControls.checkTurn(undefined, div)
+                gameControls.winCheck()
             }
-            let div = document.getElementById(`${selection}`)
-            computerSelection(div)
-            playerControls.playComputer(selection)
-            squareControls.checkTurn(undefined, div)
-            gameControls.winCheck()
-            playerControls.changeTurn()                    
+            else {
+                squareControls.endGame()
+            }
+                   
         }, 
-        selectedDiv, selection, computerSelected
-
-
+        toggleComputer() {
+            playerControls.clearSelection()
+            if(playerControls.player2.controller == "human") {
+                playerControls.changeToComputer()
+                squareControls.switchPlayer2()
+            }
+            else if (playerControls.player2.controller == "computer") {
+                playerControls.changeToHuman()
+                squareControls.switchPlayer2()
+            }
+        }, selectedDiv, selection
     } 
 }
 
 )();
-
-
-
-
-
-
 
 
 let gameControls = (function(){
@@ -210,17 +229,15 @@ let gameControls = (function(){
 
                 if(winTest.every((val) => playerControls.player1.selection.includes(val))) {
                     playerControls.player1.winner = true;
-                    console.log(playerControls.player1.winner);
                     squareControls.endGame()
                 }
 
                 else if(winTest.every((val) => playerControls.player2.selection.includes(val))) {
                     playerControls.player2.winner = true;
-                    console.log(playerControls.player2.winner);
                     squareControls.endGame()
                 }
                 
-                else if (playerControls.player1.selection.length >= 5 || playerControls.player2.selection.length >= 5){
+                else if (playerControls.player1.selection.length >= 5){
                     document.getElementById("end-game-container").style.display = "flex"
                     document.getElementById("game-refresh").style.display = "block"
                     document.querySelector(".winner").innerHTML = "It's a tie!"
@@ -229,8 +246,6 @@ let gameControls = (function(){
         }
     }
 })(); 
-
-
 
 
 
